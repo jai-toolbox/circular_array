@@ -17,11 +17,14 @@ usage:
 
 */
 
+#import "Basic";
+
 Circular_Array :: struct($T: Type, $CAPACITY: int) {
     data: [CAPACITY]T;
     head: int = 0;
     tail: int = 0;
     count: int = 0;
+    capacity :: CAPACITY;
 }
 
 
@@ -82,3 +85,16 @@ for_expansion :: (arr: *$A/Circular_Array, body: Code, flags: For_Flags) #expand
     }
 }
 
+// read-only, by value
+operator [] :: (arr: $A/Circular_Array, index: int) -> A.T {
+    assert(index >= 0 && index < arr.count);
+    actual_index := (arr.tail + index) % A.CAPACITY;
+    return arr.data[actual_index];
+}
+
+// read/write, by pointer 
+operator [] :: (arr: *$A/Circular_Array, index: int) -> *A.T {
+    assert(index >= 0 && index < arr.count);
+    actual_index := (arr.tail + index) % A.CAPACITY;
+    return *arr.data[actual_index];
+}
