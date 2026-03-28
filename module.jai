@@ -28,7 +28,7 @@ Circular_Array :: struct($T: Type, $CAPACITY: int) {
 }
 
 
-push :: (arr: *$A/Circular_Array, item: A.T) {
+carray_add :: (arr: *$A/Circular_Array, item: A.T) {
     arr.data[arr.head] = item;
     arr.head = (arr.head + 1) % A.CAPACITY;
     
