@@ -21,8 +21,11 @@ usage:
 
 Circular_Array :: struct($T: Type, $CAPACITY: int) {
     data: [CAPACITY]T;
-    head: int = 0;
-    tail: int = 0;
+
+    // these are indices
+    head: int = 0; // where we currently are
+    tail: int = 0; // where the start is
+
     count: int = 0;
     capacity :: CAPACITY;
 }
@@ -39,8 +42,13 @@ carray_add :: (arr: *$A/Circular_Array, item: A.T) {
     }
 }
 
-// shouldn't we prefix this with carray?
+/*
 
+[a, b, c, d] -> [b, c, d]
+
+todo rename pop front?
+
+*/
 carray_pop :: (arr: *$A/Circular_Array) -> A.T, bool {
     if arr.count == 0 {
         return .{}, false;
@@ -60,6 +68,7 @@ carray_peek :: (arr: *$A/Circular_Array) -> A.T, bool {
     return arr.data[arr.tail], true;
 }
 
+// we do this by pointer to avoid the copy of the array.
 carray_empty :: (arr: *$A/Circular_Array) -> bool {
     return arr.count == 0;
 }
