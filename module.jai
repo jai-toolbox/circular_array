@@ -39,7 +39,9 @@ carray_add :: (arr: *$A/Circular_Array, item: A.T) {
     }
 }
 
-pop :: (arr: *$A/Circular_Array) -> A.T, bool {
+// shouldn't we prefix this with carray?
+
+carray_pop :: (arr: *$A/Circular_Array) -> A.T, bool {
     if arr.count == 0 {
         return .{}, false;
     }
@@ -51,25 +53,36 @@ pop :: (arr: *$A/Circular_Array) -> A.T, bool {
     return item, true;
 }
 
-peek :: (arr: *$A/Circular_Array) -> A.T, bool {
+carray_peek :: (arr: *$A/Circular_Array) -> A.T, bool {
     if arr.count == 0 {
         return .{}, false;
     }
     return arr.data[arr.tail], true;
 }
 
-is_empty :: (arr: *$A/Circular_Array) -> bool {
+carray_empty :: (arr: *$A/Circular_Array) -> bool {
     return arr.count == 0;
 }
 
-is_full :: (arr: *$A/Circular_Array) -> bool {
+carray_full :: (arr: *$A/Circular_Array) -> bool {
     return arr.count == A.CAPACITY;
 }
 
+// I don't think we need this
 clear :: (arr: *$A/Circular_Array) {
     arr.head = 0;
     arr.tail = 0;
     arr.count = 0;
+}
+
+carray_find :: (arr: *$A/Circular_Array, item: A.T, $compare: (A.T, A.T) -> bool = null) -> bool, int {
+    #if compare {
+        for arr if compare(it, item) return true, it_index;
+    } else {
+        for arr if it == item return true, it_index;
+    }
+    
+    return false, -1;  // Not found.
 }
 
 for_expansion :: (arr: *$A/Circular_Array, body: Code, flags: For_Flags) #expand {
