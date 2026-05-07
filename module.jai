@@ -77,8 +77,7 @@ carray_full :: (arr: *$A/Circular_Array) -> bool {
     return arr.count == A.CAPACITY;
 }
 
-// I don't think we need this
-clear :: (arr: *$A/Circular_Array) {
+carray_reset :: (arr: *$A/Circular_Array) {
     arr.head = 0;
     arr.tail = 0;
     arr.count = 0;
